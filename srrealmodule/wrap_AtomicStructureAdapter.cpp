@@ -20,6 +20,7 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 
 #include <diffpy/srreal/AtomicStructureAdapter.hpp>
@@ -442,6 +443,12 @@ python::tuple periodicadapter_getlatpar(const PeriodicStructureAdapter& adpt)
     return rv;
 }
 
+std::string dumpperiodicstructureadapterptr(PeriodicStructureAdapterPtr adpt)
+{
+    PeriodicStructureAdapter psa(*adpt);
+    return diffpy::serialization_tostring(psa.clone());
+}
+
 // Wrapper helpers for class CrystalStructureAdapter
 
 typedef MakeWrapper<CrystalStructureAdapter> CrystalStructureAdapterWrap;
@@ -672,6 +679,8 @@ void wrap_AtomicStructureAdapter()
                 doc_CrystalStructureAdapter_updateSymmetryPositions)
         .def_pickle(StructureAdapterPickleSuite<CrystalStructureAdapterWrap>())
         ;
+
+    def("dumpperiodicstructure", dumpperiodicstructureadapterptr);
 
 }
 
