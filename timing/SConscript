@@ -1,0 +1,8 @@
+Import('env')
+
+env_prg = env.Clone(LIBS='''
+    diffpy boost_serialization boost_system boost_chrono
+    '''.split())
+env_prg.Program("parallelbench04", "parallelbench04.cpp")
+
+# vim: ft=python

@@ -151,6 +151,7 @@ Export('GlobSources')
 if os.path.isfile('sconscript.local'):
     env.SConscript('sconscript.local')
 
+env.SConscript('timing/SConscript')
 env.SConscript('srrealmodule/SConscript', variant_dir=builddir)
 
 # vim: ft=python
