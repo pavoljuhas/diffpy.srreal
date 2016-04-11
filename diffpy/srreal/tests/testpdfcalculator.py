@@ -65,8 +65,9 @@ class TestPDFCalculator(unittest.TestCase):
         # work around Structure bug of shared pdffit dictionary
         rutile2.pdffit = dict(self.tio2rutile.pdffit)
         rutile2.pdffit['spdiameter'] = 5.0
-        r3, g3 = self.pdfcalc(rutile2)
-        self.assertEqual(0.0, sum(g3[r3 >= 5] ** 2))
+#       r3, g3 = self.pdfcalc(rutile2)
+#       self.assertEqual(0.0, sum(g3[r3 >= 5] ** 2))
+        self.pdfcalc.addEnvelope('sphericalshape')
         r4, g4 = self.pdfcalc(rutile2, scale=1, spdiameter=0)
         self.failUnless(numpy.all(r4 == r0))
         self.failUnless(numpy.all(g4 == g0))
@@ -127,6 +128,8 @@ class TestPDFCalculator(unittest.TestCase):
         dscale = 0.655857
         self.pdfcalc.rmin = 1
         self.pdfcalc.rmax = 30.0001
+        # apply delta2 from the stru file
+        self.pdfcalc.delta2 = 2.309118
         # apply data scale
         self.pdfcalc(self.tio2rutile)
         self.pdfcalc.scale *= dscale
